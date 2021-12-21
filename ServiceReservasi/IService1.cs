@@ -7,64 +7,103 @@ using System.Text;
 
 namespace ServiceReservasi
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
-   
     [DataContract]
-    public class CekLokasi
+    public class DataRegister
     {
-        [DataMember]
-        public string IDLokasi { get; set; }
-        [DataMember]
-        public string NamaLokasi { get; set; }
-        [DataMember]
-        public string DeksripsiSingkat { get; set; }
+        [DataMember(Order = 1)]
+        public int id { get; set; }
+        [DataMember(Order = 2)]
+        public string username { get; set; }
+        [DataMember(Order = 3)]
+        public string password { get; set; }
+        [DataMember(Order = 4)]
+        public string kategori { get; set; }
+
     }
     [DataContract]
-    public class DetailLokasi
-    {
-        [DataMember]
-        public string IDLokasi { get; set; }
-        [DataMember]
-        public string NamaLokasi { get; set; }
-        [DataMember]
-        public string DeksripsiFull { get; set; }
-        [DataMember]
-        public int Kuota { get; set; }
-    }
-    [DataContract]
-    public class Pemesanan
+    public class Pemesanan //create
     {
         [DataMember]
         public string IDPemesanan { get; set; }
+
         [DataMember]
-        public string NamaCustomer { get; set; }
+        public string NamaCustomer { get; set; } //method
+
         [DataMember]
         public string NoTelpon { get; set; }
+
         [DataMember]
         public int JumlahPemesanan { get; set; }
+
         [DataMember]
         public string Lokasi { get; set; }
+
     }
+    [DataContract]
+    public class DetailLokasi //menampilkan detail lokasi
+    {
+        [DataMember]
+        public string IDLokasi { get; set; } //variabel dari public class
+
+        [DataMember]
+        public string NamaLokasi { get; set; }
+
+        [DataMember]
+        public string DeksripsiFull { get; set; }
+
+        [DataMember]
+        public int Kuota { get; set; }
+
+    }
+    [DataContract]
+    public class CekLokasi //daftar lokasi nongkrong
+    {
+        [DataMember]
+        public string IDLokasi { get; set; } //variabel dari public class
+
+        [DataMember]
+        public string NamaLokasi { get; set; }
+
+        [DataMember]
+        public string DeksripsiSingkat { get; set; }
+
+    }
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
     [ServiceContract]
     public interface IService1
     {
         [OperationContract]
-        string pemesanan(string IDPemesanan, string NamaCustomer, string NoTelpon, int JumlahPemesanan, string IDLokasi);
-        [OperationContract]
-        string editPemesanan(string IDPemesanan, string NamaCustomer, string No_telpon);
-        [OperationContract]
-        string deletePemesanan(string IDPemesanan);
-        [OperationContract]
-        List<CekLokasi> ReviewLokasi();
-        [OperationContract]
-        List<DetailLokasi> DetailLokasi();
-        [OperationContract]
-        List<Pemesanan> Pemesanan();
-        [OperationContract]
-        string GetData(int value);
+        string Login(string username, string password);
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        string Register(string username, string password, string kategori);
+
+        [OperationContract]
+        string UpdateRegister(string username, string password, string kategori, int id);
+
+        [OperationContract]
+        string DeleteRegister(string username);
+
+        [OperationContract]
+        List<DataRegister> DataRegist();
+
+        [OperationContract]
+        string pemesanan(string IDPemesanan, string NamaCustomer, string NoTelpon, int JumlahPemesanan, string IDLokasi); //method //proses input data
+
+        [OperationContract]
+        string editPemesanan(string IDPemesanan, string Namacustomer, string No_telpon);
+
+        [OperationContract]
+        string deletePemesanan(string IDPemesanan);
+
+        [OperationContract]
+        List<CekLokasi> ReviewLokasi(); //nampilin data yg ada di database //menampilkan isi dari yang ada contract
+
+        [OperationContract]
+        List<DetailLokasi> DetailLokasi();
+
+        [OperationContract]
+        List<Pemesanan> Pemesanan();
 
         // TODO: Add your service operations here
     }
